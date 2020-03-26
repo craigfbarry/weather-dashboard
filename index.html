@@ -6,7 +6,7 @@
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="./style.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Patrick+Hand|Source+Sans+Pro&display=swap" rel="stylesheet">
     
 
 </head>
@@ -19,19 +19,18 @@
             <sidebar class="col-4 py-2">
                 <div class="form-inline">
                     <label for="cityInput"><h3>Search for a city:</h3></label>
-                    <input type="text" class="form-control" id="cityInput">
-                    <button type="submit" class="btn btn-primary">?
-
-                    </button>
+                    <input type="text" class="form-control col-9" id="cityInput">
+                    <button type="submit" class="btn btn-primary col-2 ml-2">?</button>
                 </div>
-                <div>    
-                    <ul style="list-style-type:none;">
-                        <li>Sydney</li>
-                        <li>Melbourne</li>
-                        <li>Brisbane</li>
-                        <li>Adelaide</li>
-                        <li>Perth</li>
-                        <li>Hobart</li>
+                <div class="card mt-3">    
+                    <ul style="list-style-type:none;" class="list-group list-group-flush">
+                        <li class="list-group-item">Sydney</li>
+                        <li class="list-group-item">Melbourne</li>
+                        <li class="list-group-item">Brisbane</li>
+                        <li class="list-group-item">Adelaide</li>
+                        <li class="list-group-item">Perth</li>
+                        <li class="list-group-item">Hobart</li>
+                        <li class="list-group-item">Darwin</li>
                     </ul>
 
                 </div>
@@ -39,10 +38,10 @@
 
             </sidebar>
             <div class="col-8">
-                <div class="row border" id="city-temperature">
+                <div class="row border p-4 h-50" id="city-temperature">
                     <h3>City Temperature:</h3>
                 </div>
-                <div class="row" id="5-day-forecast">
+                <div class="row p-4" id="5-day-forecast">
                     <h3>5-day Forecast:</h3>
 
                 </div>

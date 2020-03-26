@@ -2,6 +2,10 @@
 h3      {
     font-family: 'Patrick Hand', cursive;
 }
+li      {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: large;
+}
 
 sidebar {
     background-color: rgb(247, 242, 242);
