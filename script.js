@@ -2,41 +2,32 @@ $(document).ready(function(){
 
 var savedCity = localStorage.getItem("savedCity");
 
-
-
 if (savedCity != null){
-console.log(savedCity);
+//If any city saved in local storage then display the weather conditions on page refresh.
     currentTemp(savedCity);
     forecast(savedCity);
-
-
 }
-
-else 
-{
-    console.log("null");  
-}
-
-
-
-
-
-
-
-
 
 $(".btn").on("click",function(){
-    //Determine the city selected
+    //Determine the city selected by text input or button selection
+    var city;
+    if($(this).attr("type") == "submit"){
+        city = $("#cityInput").val();
+    }
 
-    var city = $(this).attr("id");
-    console.log(city);
+    else{
+        city = $(this).attr("id");
+    }
 
     currentTemp(city);
     forecast(city);
 
-localStorage.setItem("savedCity", city);
+    localStorage.setItem("savedCity", city);
 });
 
+
+
+//This function will use ajax to query the API to return weather conditions and display them.
 function currentTemp(cityTemp){
     const api_key = "181156e75b504c175179653b4b25401f";
     //API query which is determined by city chosen
@@ -67,7 +58,7 @@ function currentTemp(cityTemp){
     });
 }
 
-
+//This function will use the API to query the 4 day forecast and display to the page
 function forecast(cityForecast){
 
     const api_key = "181156e75b504c175179653b4b25401f";
@@ -77,7 +68,7 @@ function forecast(cityForecast){
         method:  "GET"
     }).then(function(response){
 
-        //$("#4-day-forecast").emptyDiv();
+        //Loop to update the forecast boxes
         for (i=1;i<5;i++){
             $("#forecast"+i).text(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
             $("#forecast"+i).append("<br/>" + response.list[i*5].weather[0].icon);
