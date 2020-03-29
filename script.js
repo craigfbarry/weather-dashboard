@@ -39,9 +39,8 @@ function currentTemp(cityTemp){
     }).then(function(response){
         var dateToday = moment().format("DD/MM/YYYY");    
         var result = (response.main.temp -273.15).toFixed(1);
-        console.log(response.weather[0].icon);
-
-    //Display outputs to the city-temperature div
+        
+    //Display outputs to the city-temperature div including conditions icons see resource https://openweathermap.org/weather-conditions
         $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3><img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png' alt='conditions' height='40'>");
         $("#currentTemp").html("Temperature: " + result + "&#8451;");
         $("#humidity").text("Humidity: " + response.main.humidity + "%");

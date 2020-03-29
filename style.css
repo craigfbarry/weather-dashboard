@@ -17,5 +17,9 @@ sidebar {
 
 .index-extreme {
     background-color: rgb(209, 21, 168);
+}
 
+li:hover {
+    background-color: rgb(189, 209, 235);
+    font-weight: bold;
 }
