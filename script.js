@@ -1,7 +1,21 @@
 $(document).ready(function(){
 
-//localStorage.getItem("savedCity");
+var savedCity = localStorage.getItem("savedCity");
 
+
+
+if (savedCity != null){
+console.log(savedCity);
+    currentTemp(savedCity);
+    forecast(savedCity);
+
+
+}
+
+else 
+{
+    console.log("null");  
+}
 
 
 
@@ -16,11 +30,18 @@ $(".btn").on("click",function(){
 
     var city = $(this).attr("id");
     console.log(city);
+
+    currentTemp(city);
+    forecast(city);
+
+localStorage.setItem("savedCity", city);
+});
+
+function currentTemp(cityTemp){
     const api_key = "181156e75b504c175179653b4b25401f";
     //API query which is determined by city chosen
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&forecast?q="
-    + city + "&appid="+ api_key;
-    var queryForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid="+ api_key;
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityTemp +"&appid="+ api_key;
+    
     $.ajax({
         url:    queryURL,
         method: "GET"
@@ -29,7 +50,7 @@ $(".btn").on("click",function(){
         var result = (response.main.temp -273.15).toFixed(1);
 
     //Display outputs to the city-temperature div
-        $("#city-temperature").html("<h3>" + city + " " + dateToday + "</h3>");
+        $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3>");
         $("#currentTemp").html("Temperature: " + result + "&#8451;");
         $("#humidity").text("Humidity: " + response.main.humidity + "%");
         $("#windSpeed").text("Wind Speed: " + response.wind.speed + "MPH");
@@ -43,28 +64,28 @@ $(".btn").on("click",function(){
             console.log(data);
             $("#UV-index").text("UV-index: " + data.value);
         });
-       
     });
+}
 
+
+function forecast(cityForecast){
+
+    const api_key = "181156e75b504c175179653b4b25401f";
+    var queryForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityForecast + "&appid="+ api_key;
     $.ajax({
         url:    queryForecastURL,
-        mthod:  "GET"
+        method:  "GET"
     }).then(function(response){
 
-
+        //$("#4-day-forecast").emptyDiv();
         for (i=1;i<5;i++){
-            console.log(i);
-
-            $("#forecast"+i).append(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
+            $("#forecast"+i).text(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
             $("#forecast"+i).append("<br/>" + response.list[i*5].weather[0].icon);
-            $("#forecast"+i).append("<br/>Temp: " + (response.list[i*5].main.temp_max -273.15).toFixed(1));
+            $("#forecast"+i).append("<br/>Temp: " + (response.list[i*5].main.temp_max -273.15).toFixed(1) + "&#8451;");
             $("#forecast"+i).append("<br/>Humidity: " + response.list[i*5].main.humidity + "%");
         }
-    })
-
-//localStorage.setItem("savedCity"+ city);
-});
-
+    })  
+    }
 
 
 });
