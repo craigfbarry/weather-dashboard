@@ -39,9 +39,10 @@ function currentTemp(cityTemp){
     }).then(function(response){
         var dateToday = moment().format("DD/MM/YYYY");    
         var result = (response.main.temp -273.15).toFixed(1);
+        console.log(response.weather[0].icon);
 
     //Display outputs to the city-temperature div
-        $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3>");
+        $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3><img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png' alt='conditions' height='40'>");
         $("#currentTemp").html("Temperature: " + result + "&#8451;");
         $("#humidity").text("Humidity: " + response.main.humidity + "%");
         $("#windSpeed").text("Wind Speed: " + (response.wind.speed*1.60934).toFixed(1) + " km/h");
@@ -91,7 +92,7 @@ function forecast(cityForecast){
         //Loop to update the forecast boxes
         for (i=1;i<5;i++){
             $("#forecast"+i).text(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
-            $("#forecast"+i).append("<br/>" + response.list[i*5].weather[0].icon);
+            $("#forecast"+i).append("<br/><img src='http://openweathermap.org/img/wn/" + response.list[i*5].weather[0].icon + "@2x.png' alt='conditions' height='30'>");
             $("#forecast"+i).append("<br/>Temp: " + (response.list[i*5].main.temp_max -273.15).toFixed(1) + "&#8451;");
             $("#forecast"+i).append("<br/>Humidity: " + response.list[i*5].main.humidity + "%");
         }
