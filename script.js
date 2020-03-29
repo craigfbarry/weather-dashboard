@@ -51,17 +51,15 @@ $(".btn").on("click",function(){
         mthod:  "GET"
     }).then(function(response){
 
-        //var forecastDay = $("div");
 
+        for (i=1;i<5;i++){
+            console.log(i);
 
-
-        //$("#5-day-forecast").append(forecastDay)
-        console.log(response.list[2].dt_txt);
-        console.log(response.list[2].weather[0].icon);
-        console.log(response.list[2].main.temp_max);
-        console.log(response.list[2].main.humidity);
-
-    
+            $("#forecast"+i).append(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
+            $("#forecast"+i).append("<br/>" + response.list[i*5].weather[0].icon);
+            $("#forecast"+i).append("<br/>Temp: " + (response.list[i*5].main.temp_max -273.15).toFixed(1));
+            $("#forecast"+i).append("<br/>Humidity: " + response.list[i*5].main.humidity + "%");
+        }
     })
 
 //localStorage.setItem("savedCity"+ city);
