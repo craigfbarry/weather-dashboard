@@ -17,11 +17,11 @@ $(".btn").on("click",function(){
 
     else{
         city = $(this).attr("id");
+        $("#cityInput").val('');
     }
 
     currentTemp(city);
     forecast(city);
-
     localStorage.setItem("savedCity", city);
 });
 
@@ -90,10 +90,13 @@ function forecast(cityForecast){
 
         //Loop to update the forecast boxes
         for (i=1;i<5;i++){
-            $("#forecast"+i).text(moment(response.list[i*5].dt_txt).format("DD/MM/YYYY"));
-            $("#forecast"+i).append("<br/><img src='http://openweathermap.org/img/wn/" + response.list[i*5].weather[0].icon + "@2x.png' alt='conditions' height='30'>");
-            $("#forecast"+i).append("<br/>Temp: " + (response.list[i*5].main.temp_max -273.15).toFixed(1) + "&#8451;");
-            $("#forecast"+i).append("<br/>Humidity: " + response.list[i*5].main.humidity + "%");
+            //set the increment in the forecast response array to take values 12,20,28,36 which will be midday.
+            var j=i*8+4;
+            
+            $("#forecast"+i).text(moment(response.list[j].dt_txt).format("DD/MM/YYYY"));
+            $("#forecast"+i).append("<br/><img src='http://openweathermap.org/img/wn/" + response.list[j].weather[0].icon + "@2x.png' alt='conditions' height='30'>");
+            $("#forecast"+i).append("<br/>Temp: " + (response.list[j].main.temp_max -273.15).toFixed(1) + "&#8451;");
+            $("#forecast"+i).append("<br/>Humidity: " + response.list[j].main.humidity + "%");
         }
     })  
     }
