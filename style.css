@@ -10,3 +10,12 @@ li      {
 sidebar {
     background-color: rgb(247, 242, 242);
 }
+
+.index-high {
+    background-color: rgb(219, 149, 18);
+}
+
+.index-extreme {
+    background-color: rgb(209, 21, 168);
+
+}

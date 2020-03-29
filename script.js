@@ -3,7 +3,7 @@ $(document).ready(function(){
 var savedCity = localStorage.getItem("savedCity");
 
 if (savedCity != null){
-//If any city saved in local storage then display the weather conditions on page refresh.
+//If any city saved in local storage then display the weather conditions on refresh.
     currentTemp(savedCity);
     forecast(savedCity);
 }
@@ -44,7 +44,7 @@ function currentTemp(cityTemp){
         $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3>");
         $("#currentTemp").html("Temperature: " + result + "&#8451;");
         $("#humidity").text("Humidity: " + response.main.humidity + "%");
-        $("#windSpeed").text("Wind Speed: " + response.wind.speed + "MPH");
+        $("#windSpeed").text("Wind Speed: " + (response.wind.speed*1.60934).toFixed(1) + " km/h");
 
     //The UV-index requires an additional AJAX call dependant on latitude and longitude from the previous query
         var UVqueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + response.coord.lat+"&lon=" + response.coord.lon + "&appid=181156e75b504c175179653b4b25401f";
@@ -52,8 +52,28 @@ function currentTemp(cityTemp){
             url:    UVqueryURL,
             method: "GET"
         }).then(function(data){
-            console.log(data);
-            $("#UV-index").text("UV-index: " + data.value);
+                
+                $("#UV-index").text("UV-index: ");
+                $("#UV-index").append("<div id='UV-result' class='px-2 ml-2 rounded-lg text-white'>")
+                if(data.value >= 10){
+                    $("#UV-result").addClass("index-extreme");
+                }
+                else if(data.value >= 8){
+                    $("#UV-result").addClass("bg-danger");
+                }
+                else if(data.value >= 6){
+                    $("#UV-result").addClass("index-high");
+                }
+                else if(data.value >= 4){
+                    $("#UV-result").addClass("bg-warning");
+                }
+                else {
+                    $("#UV-result").addClass("bg-success");
+                }
+
+                $("#UV-result").text(data.value);
+
+
         });
     });
 }
