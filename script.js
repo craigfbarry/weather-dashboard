@@ -93,7 +93,7 @@ function forecast(cityForecast){
             //set the increment in the forecast response array to take values 8,16,24,32 which will be 24 hours increment
             //from the time of the query.
             
-            
+            $("#forecast"+i).addClass("py-2");
             $("#forecast"+i).text(moment(response.list[i*8].dt_txt).format("DD/MM/YYYY"));
             $("#forecast"+i).append("<br/><img src='http://openweathermap.org/img/wn/" + response.list[i*8].weather[0].icon + "@2x.png' alt='conditions' height='30'>");
             $("#forecast"+i).append("<br/>Temp: " + (response.list[i*8].main.temp_max -273.15).toFixed(1) + "&#8451;");

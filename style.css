@@ -4,11 +4,14 @@ h3      {
 }
 li      {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: large;
+    
 }
 
 sidebar {
     background-color: rgb(247, 242, 242);
+}
+#city-display {
+    background-color: rgb(189, 209, 235);
 }
 
 .index-high {
