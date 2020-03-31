@@ -8,37 +8,44 @@ if (savedCity != null){
     forecast(savedCity);
 }
 
-$(".btn").on("click",function(){
-    //Determine the city selected by text input or button selection
+$("body").on("click", ".btn", function(){
+    
+    //Determine the city selected by text input or button selection.
     var city;
     if($(this).attr("type") == "submit"){
         city = $("#cityInput").val();
+        let newListItem = $("<li>");
+        //Append search item to the city list.
+        newListItem.addClass("list-group-item btn px-1");
+        newListItem.attr("id",city); 
+        $(".list-group").prepend(newListItem);
+        $("#"+city+"").text(city);
     }
 
     else{
         city = $(this).attr("id");
         $("#cityInput").val('');
     }
-
+    
+    //Display current conditions and the 4 day forecast
     currentTemp(city);
     forecast(city);
     localStorage.setItem("savedCity", city);
 });
 
 
-
 //This function will use ajax to query the API to return weather conditions and display them.
 function currentTemp(cityTemp){
     const api_key = "181156e75b504c175179653b4b25401f";
     //API query which is determined by city chosen
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityTemp +"&appid="+ api_key;
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityTemp +"&appid="+ api_key;
     
     $.ajax({
         url:    queryURL,
         method: "GET"
     }).then(function(response){
-        var dateToday = moment().format("DD/MM/YYYY");    
-        var result = (response.main.temp -273.15).toFixed(1);
+        let dateToday = moment().format("DD/MM/YYYY");    
+        let result = (response.main.temp -273.15).toFixed(1);
         
     //Display outputs to the city-temperature div including conditions icons see resource https://openweathermap.org/weather-conditions
         $("#city-temperature").html("<h3>" + cityTemp + " " + dateToday + "</h3><img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png' alt='conditions' height='40'>");
@@ -47,7 +54,7 @@ function currentTemp(cityTemp){
         $("#windSpeed").text("Wind Speed: " + (response.wind.speed*1.60934).toFixed(1) + " km/h");
 
     //The UV-index requires an additional AJAX call dependant on latitude and longitude from the previous query
-        var UVqueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + response.coord.lat+"&lon=" + response.coord.lon + "&appid=181156e75b504c175179653b4b25401f";
+        var UVqueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + response.coord.lat+"&lon=" + response.coord.lon + "&appid=" + api_key;
         $.ajax({
             url:    UVqueryURL,
             method: "GET"
