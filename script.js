@@ -8,18 +8,18 @@ if (savedCity != null){
     forecast(savedCity);
 }
 
-$("body").on("click", ".btn", function(){
+$("body").on("click",".btn", function(){
     
     //Determine the city selected by text input or button selection.
     var city;
     if($(this).attr("type") == "submit"){
-        city = $("#cityInput").val();
+        city = $("#cityInput").val();   
         let newListItem = $("<li>");
         //Append search item to the city list.
         newListItem.addClass("list-group-item btn px-1");
         newListItem.attr("id",city); 
         $(".list-group").prepend(newListItem);
-        $("#"+city+"").text(city);
+        $("#"+city+"").html(city);
     }
 
     else{
