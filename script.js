@@ -13,18 +13,22 @@ $("body").on("click",".btn", function(){
     //Determine the city selected by text input or button selection.
     var city;
     if($(this).attr("type") == "submit"){
-        city = $("#cityInput").val();   
+        city = $("#cityInput").val();
+        //Using city names as a data attribute so need to account for cities with a space eg "New York"
+        var cityString = city.replace(" ","-");
         let newListItem = $("<li>");
         //Append search item to the city list.
         newListItem.addClass("list-group-item btn px-1");
-        newListItem.attr("id",city); 
+        newListItem.attr("id",cityString); 
         $(".list-group").prepend(newListItem);
-        $("#"+city+"").html(city);
+        $("#"+cityString+"").text(cityString.replace("-"," "));
     }
 
     else{
         city = $(this).attr("id");
-        $("#cityInput").val('');
+        //need to replace the attribute "-" before running any queries.
+        city = city.replace("-"," ");
+         $("#cityInput").val('');
     }
     
     //Display current conditions and the 4 day forecast
